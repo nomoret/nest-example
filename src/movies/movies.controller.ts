@@ -1,17 +1,17 @@
 import {
+  Body,
   Controller,
   Delete,
   Get,
   Param,
   Patch,
   Post,
-  Put,
 } from '@nestjs/common';
 import { MoviesService } from './movies.service';
 
 @Controller('movies')
 export class MoviesController {
-  constructor(private moviesService: MoviesService) {}
+  constructor(private readonly moviesService: MoviesService) {}
 
   @Get()
   getAll() {
@@ -20,12 +20,12 @@ export class MoviesController {
 
   @Get('/:id')
   getId(@Param('id') movieId: string) {
-    return this.moviesService.getId(movieId);
+    return this.moviesService.getMovie(movieId);
   }
 
   @Post()
-  createMovie() {
-    return this.moviesService.createMovie();
+  createMovie(@Body() movieData) {
+    return this.moviesService.createMovie(movieData);
   }
 
   @Delete('/:id')
